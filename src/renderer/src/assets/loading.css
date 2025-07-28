@@ -1,0 +1,12 @@
+div {
+  animation: movingbg 5s;
+}
+
+@keyframes movingbg {
+  0% {
+    background: radial-gradient(circle, #f7971e, #ffd200);
+  }
+  100% {
+    background: radial-gradient(circle, #ffd200, #f7971e);
+  }
+}
