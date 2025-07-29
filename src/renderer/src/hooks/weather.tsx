@@ -24,7 +24,7 @@ export function useWeather({
       daily: daily ?? []
     }).then((responses) => {
       setWeatherData(
-        responses.map((weatherResponse, idx) => {
+        responses.map((weatherResponse) => {
           const hourly = weatherResponse.hourly()
           const dailydata = weatherResponse.daily()
 

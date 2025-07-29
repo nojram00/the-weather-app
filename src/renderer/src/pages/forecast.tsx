@@ -1,5 +1,4 @@
 import Layout from '@renderer/components/layout'
-import Loading from '@renderer/components/loading'
 import WeatherGraph from '@renderer/components/weather-graph'
 import { useGeo } from '@renderer/hooks/ipapi'
 import { useWeather } from '@renderer/hooks/weather'

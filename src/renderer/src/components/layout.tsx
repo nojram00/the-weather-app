@@ -1,5 +1,6 @@
 import React from 'react'
 import '../assets/layout.css'
+import { Link } from 'react-router'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,8 +11,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
 
         <nav>
-          <a href="/weather">Forecast</a>
-          <a href="/">Home</a>
+          <Link className="link" to="/weather">
+            Forecast
+          </Link>
+          <Link className="link" to="/">
+            Home
+          </Link>
         </nav>
       </header>
 
