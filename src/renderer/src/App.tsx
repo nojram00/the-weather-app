@@ -4,6 +4,8 @@ import { useWeather } from './hooks/weather'
 import { useGeo } from './hooks/ipapi'
 import { Sunrise, Sunset } from './components/sun-cards'
 import RealtimeClock from './components/realtime-clock'
+import { WeatherForecastApi } from './weather-sdk/forecast'
+import { AstronomicalData } from './weather-sdk/astronomical-data'
 
 function App(): React.JSX.Element {
   const daily = useMemo(() => ['sunrise', 'sunset'], [])
@@ -13,6 +15,9 @@ function App(): React.JSX.Element {
     sunrise: '',
     sunset: ''
   })
+
+  const [sunrise, setSunrise] = useState('')
+  const [sunset, setSunset] = useState('')
 
   const { latitude, longitude, city, country } = useGeo()
 
@@ -28,14 +33,41 @@ function App(): React.JSX.Element {
       function (pos) {
         const { longitude, latitude } = pos.coords
 
-        refetch({ lat: latitude, long: longitude, daily, forecast_days: 1 })
+        // refetch({ lat: latitude, long: longitude, daily, forecast_days: 1 })
+
+        const forecast = new AstronomicalData({
+          longitude,
+          latitude,
+          forecast_days: 1
+        })
+
+        forecast.sunrise.then((result) => {
+          setSunrise(result[0].toLocaleTimeString())
+        })
+
+        forecast.sunset.then((result) => {
+          setSunset(result[0].toLocaleTimeString())
+        })
 
         setPending(false)
       },
       function () {
         console.log('Coords: ', { latitude, longitude })
         if (typeof latitude === 'number' && typeof longitude === 'number') {
-          refetch({ lat: latitude, long: longitude, daily, forecast_days: 1 })
+          const forecast = new AstronomicalData({
+            longitude,
+            latitude,
+            forecast_days: 1
+          })
+
+          forecast.sunrise.then((result) => {
+            setSunrise(result[0].toLocaleTimeString())
+          })
+
+          forecast.sunset.then((result) => {
+            setSunset(result[0].toLocaleTimeString())
+          })
+
           setPending(false)
         }
       }
@@ -81,8 +113,8 @@ function App(): React.JSX.Element {
         {!pending && (
           <div className="container">
             <div className="gridbox">
-              <Sunrise time={sunrise_sunset.sunrise} />
-              <Sunset time={sunrise_sunset.sunset} />
+              <Sunrise time={sunrise} />
+              <Sunset time={sunset} />
             </div>
             <div className="wrapper">
               <span>{greet()}!</span>
