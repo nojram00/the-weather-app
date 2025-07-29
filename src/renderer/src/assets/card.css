@@ -1,0 +1,28 @@
+.card {
+  min-height: 10rem;
+  min-width: 20rem;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px rgba(244, 244, 244, .70);
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  padding: 1.4rem;
+  justify-content: space-between;
+  align-items: center;
+
+  & > .text{
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, .6)
+  }
+}
+.card[data-sunrise]{
+  background: linear-gradient(#caf0f8, #00b4d8);
+  box-shadow: 2px 2px 2px 2px #0077b6;
+}
+
+.card[data-sunset]{
+  background: linear-gradient(#ffba08, #dc2f02);
+  box-shadow: 2px 2px 2px 2px #9d0208;
+}

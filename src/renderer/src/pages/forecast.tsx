@@ -12,7 +12,7 @@ export default function Forecast() {
 
   const [pending, setPending] = useState<boolean>(true)
 
-  const { latitude, longitude } = useGeo()
+  const { latitude, longitude, city } = useGeo()
 
   const { weatherData, refetch } = useWeather({
     long: 0,
@@ -63,7 +63,7 @@ export default function Forecast() {
     <Layout>
       <main className="w-full h-screen p-10 flex items-center justify-around">
         {pending && <div>Getting Forecast Results...</div>}
-        {!pending && <WeatherGraph datetime={datetime} rain={rain} temperature={temp} />}
+        {!pending && <WeatherGraph city={city} datetime={datetime} rain={rain} temperature={temp} />}
       </main>
     </Layout>
   )

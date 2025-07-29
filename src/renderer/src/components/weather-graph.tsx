@@ -17,8 +17,9 @@ ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, T
 export default function WeatherGraph({
   datetime,
   temperature,
-  rain
-} : { datetime: Array<any>, temperature: Array<any>, rain: Array<any>}){
+  rain,
+  city
+} : { datetime: Array<any>, temperature: Array<any>, rain: Array<any>, city? : string}){
 
   const data = {
     labels: datetime.map(d => new Date(d).toLocaleString([], { hour: '2-digit', minute: '2-digit', year: 'numeric', month: '2-digit', day: '2-digit' })),
@@ -50,7 +51,7 @@ export default function WeatherGraph({
       },
       title: {
         display: true,
-        text: 'Weather Report'
+        text: `Weather Report ${city ? '- ' + city : "" }`
       }
     }
   }

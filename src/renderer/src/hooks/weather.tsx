@@ -4,24 +4,39 @@ import { useEffect, useState } from 'react'
 export function useWeather({
   long,
   lat,
+  forecast_days = 7,
   hour,
   daily
 }: {
   long: number
   lat: number
+  forecast_days?: number | string | string[]
   hour?: string | string[]
   daily?: string | string[]
 }) {
   const url = 'https://api.open-meteo.com/v1/forecast'
   const [weatherData, setWeatherData] = useState<Array<any> | null>(null)
 
-  function refetch({ long, lat, hour }) {
+  function refetch({
+    long,
+    lat,
+    hour,
+    daily,
+    forecast_days
+  }: {
+    long: number
+    lat: number
+    forecast_days?: number | string | string[]
+    hour?: string | string[]
+    daily?: string | string[]
+  }) {
     console.log(long, lat)
     fetchWeatherApi(url, {
       latitude: lat,
       longitude: long,
       hourly: hour ?? [],
-      daily: daily ?? []
+      daily: daily ?? [],
+      forecast_days
     }).then((responses) => {
       setWeatherData(
         responses.map((weatherResponse) => {
@@ -76,6 +91,30 @@ export function useWeather({
                         weatherResponse.utcOffsetSeconds()) *
                         1000
                     )
+                ),
+                variables: (idx: number) => {
+                  return dailydata.variables(idx)?.valuesArray()
+                }
+              }
+            })
+          }
+
+          if (daily?.includes('sunrise', 0) && daily?.includes('sunset', 1) && dailydata) {
+            const sunrise = dailydata.variables(0)!
+            const sunset = dailydata.variables(1)!
+            Object.assign(_weatherData, {
+              daily: {
+                sunrise: [...Array(sunrise.valuesInt64Length())].map(
+                  (_, i) =>
+                    new Date(
+                      (Number(sunrise.valuesInt64(i)) + weatherResponse.utcOffsetSeconds()) * 1000
+                    )
+                ),
+                sunset: [...Array(sunset.valuesInt64Length())].map(
+                  (_, i) =>
+                    new Date(
+                      (Number(sunset.valuesInt64(i)) + weatherResponse.utcOffsetSeconds()) * 1000
+                    )
                 )
               }
             })
@@ -97,8 +136,8 @@ export function useWeather({
   }
 
   useEffect(() => {
-    refetch({ long, lat, hour })
-  }, [long, lat, hour])
+    refetch({ long, lat, hour, daily, forecast_days })
+  }, [long, lat, hour, daily, forecast_days])
 
   return { weatherData, refetch }
 }
