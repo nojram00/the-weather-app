@@ -1,4 +1,3 @@
-import React from 'react'
 import '../assets/card.css'
 
 export function Sunrise({ time }: { time: string }) {
