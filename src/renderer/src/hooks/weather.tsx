@@ -30,13 +30,12 @@ export function useWeather({
     hour?: string | string[]
     daily?: string | string[]
   }) {
-    console.log(long, lat)
     fetchWeatherApi(url, {
       latitude: lat,
       longitude: long,
       hourly: hour ?? [],
       daily: daily ?? [],
-      forecast_days
+      forecast_days: forecast_days ?? 7
     }).then((responses) => {
       setWeatherData(
         responses.map((weatherResponse) => {

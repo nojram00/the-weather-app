@@ -25,7 +25,7 @@ export default function WeatherGraph({
     labels: datetime.map(d => new Date(d).toLocaleString([], { hour: '2-digit', minute: '2-digit', year: 'numeric', month: '2-digit', day: '2-digit' })),
     datasets: [
       {
-        label: 'Temperature',
+        label: 'Temperature 2m (Degree Celcius)',
         data: temperature,
         backgroundColor: '#53A2BE',
         borderColor: '#176087',

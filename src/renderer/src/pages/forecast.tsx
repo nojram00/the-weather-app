@@ -49,8 +49,8 @@ export default function Forecast() {
     //   }
     // })
     const _datetime = weatherData?.map((wd) => wd.weather_data.hourly.time) as Array<any>
-    const _rain = weatherData?.map((wd) => wd.weather_data.hourly.variables(1)) as Array<any>
-    const temperature = weatherData?.map((wd) => wd.weather_data.hourly.variables(0)) as Array<any>
+    const _rain = weatherData?.map((wd) => wd.weather_data.hourly.variables(0)) as Array<any>
+    const temperature = weatherData?.map((wd) => wd.weather_data.hourly.variables(1)) as Array<any>
 
     setDatetime(_datetime[0].slice(0, 24))
     setRain(_rain[0].slice(0, 24))
@@ -63,7 +63,9 @@ export default function Forecast() {
     <Layout>
       <main className="w-full h-screen p-10 flex items-center justify-around">
         {pending && <div>Getting Forecast Results...</div>}
-        {!pending && <WeatherGraph city={city} datetime={datetime} rain={rain} temperature={temp} />}
+        {!pending && (
+          <WeatherGraph city={city} datetime={datetime} rain={rain} temperature={temp} />
+        )}
       </main>
     </Layout>
   )
