@@ -23,7 +23,6 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
-    "@tailwindcss/vite": "^4.1.11",
     "chart.js": "^4.5.0",
     "electron-updater": "^6.3.9",
     "openmeteo": "^1.2.0",
@@ -35,6 +34,7 @@
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
     "@electron-toolkit/eslint-config-ts": "^3.0.0",
     "@electron-toolkit/tsconfig": "^1.0.1",
+    "@tailwindcss/vite": "^4.1.11",
     "@types/node": "^22.16.5",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
