@@ -1,14 +1,18 @@
 import Layout from '@renderer/components/layout'
 import WeatherGraph from '@renderer/components/weather-graph'
+import Container from '@renderer/components/weather-visual'
 import { useGeo } from '@renderer/hooks/ipapi'
+// import { useLayout } from '@renderer/hooks/layoutContext'
 import { WeatherForecastApi } from '@renderer/weather-sdk/forecast'
-import { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 export default function Forecast() {
   const hourly = useMemo(() => ['rain', 'temperature_2m'], [])
   const [datetime, setDatetime] = useState<Array<any>>([])
   const [rain, setRain] = useState<Array<any>>([])
   const [temp, setTemp] = useState<Array<any>>([])
+
+  // const { setVisual } = useLayout()
 
   const [pending, setPending] = useState<boolean>(true)
 
@@ -56,12 +60,31 @@ export default function Forecast() {
     )
   }, [latitude, longitude, hourly])
 
+  // useEffect(() => {
+  //   const callback = (e) => {
+  //     const toggled = (e as CustomEvent<{ value: boolean }>).detail.value
+  //     console.log(toggled)
+  //   }
+  //   document.addEventListener('switchToggled', callback)
+
+  //   return document.removeEventListener('switchToggled', callback)
+  // }, [])
+
+  // useEffect(() => {
+  //   setVisual(true)
+  // }, [])
+
   return (
     <Layout>
       <main className="w-full h-screen p-10 flex items-center justify-around">
         {pending && <div>Getting Forecast Results...</div>}
         {!pending && (
-          <WeatherGraph city={city} datetime={datetime} rain={rain} temperature={temp} />
+          <React.Fragment>
+            <div className="graph">
+              <WeatherGraph city={city} datetime={datetime} rain={rain} temperature={temp} />
+            </div>
+            <Container time={datetime} rain={rain} temp={temp} />
+          </React.Fragment>
         )}
       </main>
     </Layout>
